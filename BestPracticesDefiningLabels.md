@@ -56,7 +56,7 @@ Information which is not related to any business activity therefor falls under n
 
 Here a look of how the extended labels schema translate to the AIP UI, notice the "Highly Confidential" two sublabels (These labels are configured in the global policy and visible to all employees as).  
  
-##Specific Taxonomies for Selected Groups
+## Specific Taxonomies for Selected Groups
 
 In some companies there are divisions or departments that have additional classifications or special use cases that are not covered by the general taxonomy. These can be configured by adding scoped policies.  For example, Contoso HR are using two internal classifications that correspond with Level2 and Level3 as shown below: 
 
