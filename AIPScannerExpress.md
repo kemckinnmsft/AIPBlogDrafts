@@ -1,5 +1,3 @@
-**Published at https://techcommunity.microsoft.com/t5/Azure-Information-Protection/Azure-Information-Protection-Scanner-Express-Installation/ba-p/264761**
-
 # Azure Information Protection Scanner Express Installation
 
 Installing the Azure Information Protection scanner is not terribly difficult as long as you follow the instructions explicitly and don't miss anything.  This is sometimes a challenge as there are a lot of steps involved with registering the Azure AD Applications and delegating rights.  To make this process a bit quicker, we have developed a scripted method that will allow you to fully install scanner in less than 10 minutes (assuming all prerequisites are in place).
@@ -56,7 +54,7 @@ First, we will create a service account in the cloud tenant to use for AIP authe
    
    ```PowerShell
     $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-    $PasswordProfile.EnforceChangePasswordPolicy = $false
+    $PasswordProfile.ForceChangePasswordNextLogin = $false
     $Password = Read-Host -assecurestring "Please enter password for cloud service account"
     $Password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password))
     $PasswordProfile.Password = $Password
@@ -66,7 +64,7 @@ First, we will create a service account in the cloud tenant to use for AIP authe
    
    ```PowerShell
    $Tenant = Read-Host "Please enter tenant name for UserPrincipalName (e.g. contoso.com)"
-   New-AzureADUser -AccountEnabled $True -DisplayName "AIP Scanner Cloud Service" -PasswordProfile $PasswordProfile -MailNickName "AIPScannerCloud" -UserPrincipalName "AIPScannerCloud@" + $Tenant
+   New-AzureADUser -AccountEnabled $True -DisplayName "AIP Scanner Cloud Service" -PasswordProfile $PasswordProfile -MailNickName "AIPScannerCloud" -UserPrincipalName "AIPScannerCloud@$Tenant"
    ```
 1. When prompted, enter the tenant name you want to use for the UserPrincipleName for the clous service account (e.g. contoso.com).
 
@@ -219,13 +217,13 @@ Install-AIPScanner
 Connect-AzureAD
 
 $PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-$PasswordProfile.EnforceChangePasswordPolicy = $false
+$PasswordProfile.ForceChangePasswordNextLogin = $false
 $Password = Read-Host -assecurestring "Please enter password for cloud service account"
 $Password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password))
 $PasswordProfile.Password = $Password
 
 $Tenant = Read-Host "Please enter tenant name for UserPrincipalName (e.g. contoso.com)"
-New-AzureADUser -AccountEnabled $True -DisplayName "AIP Scanner Cloud Service" -PasswordProfile $PasswordProfile -MailNickName "AIPScannerCloud" -UserPrincipalName "AIPScannerCloud@" + $Tenant
+New-AzureADUser -AccountEnabled $True -DisplayName "AIP Scanner Cloud Service" -PasswordProfile $PasswordProfile -MailNickName "AIPScannerCloud" -UserPrincipalName "AIPScannerCloud@$Tenant"
 
 New-AzureADApplication -DisplayName AIPOnBehalfOf -ReplyUrls http://localhost
 $WebApp = Get-AzureADApplication -Filter "DisplayName eq 'AIPOnBehalfOf'"
