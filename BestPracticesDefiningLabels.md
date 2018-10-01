@@ -51,11 +51,10 @@ Information which is not related to any business activity therefor falls under n
 |Level 1|Information owned by or shared with Contoso which has no associated risk but is not for public release. Can be shared with externals parties if necessary for conducting business.|General|
 |Level 2|Information owned by or shared with Contoso which has associated risk. Can be shared with authorized externals parties, only if necessary for conducting business must be protected at rest.|Confidential|
 |Level 3|Information owned by or shared with Contoso which has associated risk. Can be shared with authorized externals parties, by authorized employees only, if necessary for conducting business. must be protected at rest and in transit and cannot be shared with external.|Highly Confidential (Internal Only)|
-|Level 3|Information owned by or shared with Contoso which has associated risk. Can be shared with authorized externals parties, by authorized employees only, if necessary for conducting business. must be protected at rest and in transit and share under usage restrictions|Highly Confidential (Secure Sharing) |
+|Level 3|Information owned by or shared with Contoso which has associated risk. Can be shared with authorized externals parties, by authorized employees only, if necessary for conducting business. must be protected at rest and in transit and share under usage restrictions|Highly Confidential (Secure Sharing)|
    
-Here a look of how the extended labels schema translate to the AIP UI, notice the "Highly Confidential" two sublabels (These labels are configured in the global policy and visible to all employees as).  
 
- 
+Here a look of how the extended labels schema translate to the AIP UI, notice the "Highly Confidential" two sublabels (These labels are configured in the global policy and visible to all employees as).  
  
 ##Specific Taxonomies for Selected Groups
 
