@@ -128,69 +128,84 @@ In this task, we will use the command created previously to authenticate the AIP
 
 Past this point, scanner configuration is the same as it is in the other articles.  I am including it here for convenience.
 
-### Configuring Repositories
+### About Policies:
 
-Repositories can be on-premises SharePoint 2010, 2013, or 2016 document libraries or lists and any accessible CIFS based share.  
+Now that the scanner has an authentication token, we should discuss what you want to do with the AIP Scanner.  We know that you want to use it to scan file shares and SharePoint sites, but some discussion needs to be had about how the scanner locates data and what the scanner will do once it finds it. 
 
-> NOTE: In order to do discovery, the scanner service pulls the documents to the server, so having the scanner server located in the same LAN as your repositories is recommended. You can deploy as many servers as you like in your domain, so putting one at each major site is probably a good idea.
+AIP Policies contain Labels and Sub-labels that allow you to classify and optionally protect data.  You can assign conditions to these labels using standard Office 365 DLP templates and have those conditions be recommended or automatic.  For the AIP Scanner to classify documents, you must set these conditions to be **Automatic**.  This allows the AIP Scanner to protect content without the need for user input.  This is a content based approach and labels are assigned to content based on the conditions defined in each label.  If you want all of the documents in your repositories to be classified, then you can use the default label setting in the portal and the AIP Scanner will assign that label to any content that does not meet any other automatic criteria. This is done in the Global policy blade, under the Configure settings to display and apply on Information Protection end users section.
 
-1. To add a file share repository, open a PowerShell window and run the command below
-    
-    ```PowerShell
-    Add-AIPScannerRepository -Path \\fileserver\documents
-    ```
-2. To add a SharePoint 2013/2016 document library run the command below
-    
-    ```PowerShell
-    Add-AIPScannerRepository -Path http://sharepoint/documents
-    ```
-3. To verify that the repositories that are configured, run the command below
-    
-    ```PowerShell
-    Get-AIPScannerRepository
-    ```
+NOTE: Use caution when using a default label as this will label any file that is not caught by properly defined conditions.  This could potentially result in improper classification of many documents if not tested appropriately.
 
-### Sensitive Data Discovery
+For more in-depth information about configuring policies, you can see the official documentation at https://docs.microsoft.com/en-us/information-protection/deploy-use/configure-policy-classification
 
-One of the most useful features of the AIP Scanner is the discovery of sensitive data across all of your configured repositories.  You can do this by using Set-AIPScannerConfiguration with a switch called -DiscoverInformationTypes.  When this switch is set to All, the scanner will discover files that contain any data in the list of all Office 365 DLP sensitive data types so configuration of conditions in labels are not required.
+### Configuring Repositories:
 
->NOTE: Normally, custom data types based on string and regex values are also available, but these require AIP Premium P2 licensing.
+Repositories can be on-premises SharePoint 2013 or 2016 document libraries or lists and any accessible CIFS based share.  
+NOTE: In order to do discovery, classification, and protection, the scanner service pulls the documents to the server, so having the scanner server located in the same LAN as your repositories is recommended. You can deploy as many servers as you like in your domain, so putting one at each major site is probably a good idea (Microsoft currently uses around 40 Scanner instances worldwide for internal repositories and will be expanding that to 240).
 
- 1. The PowerShell command below will allow you to scan your repositories against all information types.
+To add a file share repository, open a PowerShell window and run the command below
 
-    ```PowerShell
-    Set-AIPScannerConfiguration -DiscoverInformationTypes All
-    ```
+```PowerShell
+Add-AIPScannerRepository -Path \\fileserver\documents
+```
+
+To add a SharePoint 2013/2016 document library run the command below
+
+```PowerShell
+Add-AIPScannerRepository -Path http://sharepoint/documents
+```
+
+To verify that the repositories that are configured, run the command below
+
+```PowerShell
+Get-AIPScannerRepository
+```
+
+### Sensitive Data Discovery:
+
+One of the most useful features of the AIP Scanner is the discovery of sensitive data across all of your configured repositories.  You can do this by using Set-AIPScannerConfiguration with a switch called -DiscoverInformationTypes.  When this switch is set to All, the scanner will discover files that contain any data in the list of all Office 365 DLP sensitive data types, and any custom string or regex values that you have specified as automatic conditions for labels in the Azure Information Protection policy. When you use this option, labels do not need to be configured to use any conditions for the Office 365 sensitive data types, but you will need automatic conditions configured for custom string or regex values.
+NOTE: The labels for the custom values can be applied to a policy scoped just to the AIP Scanner service account if you do not want them triggering on your global labels.
+
+The PowerShell command below will allow you to scan your repositories against all information types.
  
-1. To start the discovery, use the PowerShell command below
+```PowerShell
+Set-AIPScannerConfiguration -Enforce Off -DiscoverInformationTypes All
+Start-AIPScan
+```
 
-    ```PowerShell
-    Start-AIPScan
-    ```
+Running this command on your defined repositories will show you all of the sensitive data types you currently have in those repositories.  You can then use this information to define conditions on labels so you can properly classify and protect your content.  
 
- After running the scan, you can review the logs by opening the Event Viewer and clicking on
+After running the scan, you can review the logs by opening the Event Viewer and clicking on
 
 Application and Services Logs and then on Azure Information Protection.
-you can view the detailed logs at C:\users\<Scanner Service Account Profile>\appdata\local\Microsoft\MSIP\Scanner\Reports.  There you will find the summary txt and detailed csv files.
+you can view the detailed logs at C:\users\Scanner Service Account Profile\appdata\local\Microsoft\MSIP\Scanner\Reports.  There you will find the summary txt and detailed csv files.
 
 Below is a screenshot showing the DetailedReport.csv file after a full discovery scan.
 
 **INSERT SCREENSHOT**
 
-As you can see, it shows the file name and all of the sensitive information types that were identified in each file.  This data can be reviewed manually, or more realistically, ingested into a SIEM for analysis and reporting.
+As you can see, it shows the file name and all of the sensitive information types that were identified in each file.  This data can be reviewed manually, or more realistically, viewed in the new AIP Log Analytics dashboard or ingested into a SIEM for analysis and reporting.
 
-### Protection Options
+### Enforcement:
 
-Although automated protection via the AIP scanner is more convenient, there are still options available with AIP P1 for classifying and/or protecting the sensitive data.  These options are 
+Once you have your conditions defined, type the PowerShell command below to enforce protection and have the scanner run once.
 
-- Manual Classification
-    With Manual classification, a user must open each document containing sensitive information and classify it via the AIP toolbar.
-- Manual or Bulk Classification via the AIP client Windows Explorer add-in
-    Using the AIP client via the right-click context menu in Windows Explorer, you can classify and/or protect individual files or entire directories of files with a single label.
-- Bulk Classification via the AIP PowerShell cmdlets
-    Using the PowerShell cmdlets contained in the AzureInformationProtection PowerShell module (full details here) such as Set-AIPFileLabel, you can potentially script solutions for classifying and protecting the files that are identified to contain sensitive data in the DetailedReport.csv files produced by the AIP scanner.
+ 
+```PowerShell
+Set-AIPScannerConfiguration -Enforce On
+Start-AIPScan
+```
 
-You should now have a fully functional AIP Scanner instance.  You can repeat this process on multiple servers as necessary and use the same Set-AIPAuthentication command for each of them.  This is a simple setup for a basic AIP scanner server that can be used to discover a large amount of sensitive data easily.  I highly recommend reading the official documentation on deploying the scanner as there are some less common caveats that I have left out and they cover performance tips and other additional information.
+You should now be able to review the event log and AIP Scanner log files to see what files have been classified and protected. 
+
+The last item you will want to do is set the scanner to continuously monitor the repositories you have defined for new content.  This can be done using the PowerShell commands below.
+ 
+```PowerShell
+Set-AIPScannerConfiguration -Enforce On -Schedule Always
+Start-AIPScan
+```
+
+You should now have a fully functional AIP Scanner instance.  You can repeat this process on multiple servers as necessary and use the same Set-AIPAuthentication command for each of them.  This is a simple setup for a basic scanner server that can be used to protect a large amount of data easily.  I highly recommend reading the official documentation on deploying the scanner as there are some less common caveats that I have left out and they cover performance tips and other additional information.
 
 Below is a full script you can use to automate everything we have covered in this post.  Again, this is not currently supported, so please test before deploying in a production environment.
 
