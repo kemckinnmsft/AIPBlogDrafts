@@ -1,3 +1,5 @@
+**Published at https://techcommunity.microsoft.com/t5/Azure-Information-Protection/Azure-Information-Protection-Scanner-Express-Installation/ba-p/264761**
+
 # Azure Information Protection Scanner Express Installation
 
 Installing the Azure Information Protection scanner is not terribly difficult as long as you follow the instructions explicitly and don't miss anything.  This is sometimes a challenge as there are a lot of steps involved with registering the Azure AD Applications and delegating rights.  To make this process a bit quicker, we have developed a scripted method that will allow you to fully install scanner in less than 10 minutes (assuming all prerequisites are in place).
