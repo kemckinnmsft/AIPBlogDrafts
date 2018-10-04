@@ -47,7 +47,7 @@ Start ~\Desktop\Set-AIPAuthentication.txt
 
 ```
 
-Next, we will doanload, verify, and install the AIP scanner binaries that are included with the AIP client.  The commands below will download the current GA (1.37.19.0) and install it on your server.  Follow the prompts in the script to perform these tasks. Finally, when prompted, enter the credentials for the AIP scanner service account (e.g. Contoso\AIPScanner). It will ask you for the SQL Server instance name (if using SQL Express remember to use ServerName\SQLExpress as the instance name). 
+Next, we will download, verify, and install the AIP scanner binaries that are included with the AIP client.  The commands below will download the current GA (1.37.19.0) and install it on your server.  Follow the prompts in the script to perform these tasks. Finally, when prompted, enter the credentials for the AIP scanner service account (e.g. Contoso\AIPScanner). It will ask you for the SQL Server instance name (if using SQL Express remember to use ServerName\SQLExpress as the instance name). 
 
 ```PowerShell
 $AIPclientURL = "https://download.microsoft.com/download/4/9/1/491251F7-46BA-46EC-B2B5-099155DD3C27/AZInfoProtection_MSI_for_central_deployment.msi"
@@ -173,7 +173,7 @@ Install-AIPclient -MSIpath $AIPOutputPath
 Install-AIPScanner
 ```
 
-Now that you have the AIP scanner installed, you can run the Set-AIPAuthentication command to get the auth token.  Open a PowerShell prompt **as the AIP scanner service account** and run the command from Set-AIPAuthentication.txt created earlier.
+Now that you have the AIP scanner installed, you can run the **Set-AIPAuthentication** command to get the auth token.  Open a PowerShell prompt **as the AIP scanner service account** and run the command from Set-AIPAuthentication.txt created earlier.
 
 Finally, run the command below to initialize the service with the new token.
 
@@ -188,7 +188,7 @@ Get-AIPScannerStatus
 Get-AIPScannerConfiguration
 ```
 
-Next, you can configure the repositories you want to scan.  I recommend configuring these with the **-SetDefaultLabel** property set to **Off**.  That way, when/if you set a default label in your global policy, your scanner will not start ot classify items inappropriately.
+Next, you can configure the repositories you want to scan.  I recommend configuring these with the **-SetDefaultLabel** property set to **Off**.  That way, when/if you set a default label in your global policy, your scanner will not start to classify items inappropriately.
 
 ```PowerShell
 Add-AIPScannerRepository -Path \\Fileserver\Documents -SetDefaultLabel Off
