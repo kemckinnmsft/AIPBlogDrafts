@@ -1,4 +1,4 @@
-# Identifying Sensitive On Premises Data Today!
+# Discovering Sensitive On Premises Data Today!
 
 Defining a full Information Protection taxonomy can be a time-consuming and challenging task in a business environment. However, with the AIP Scanner, you can start identifying sensitive data that is sitting on your network in a single day.  Once you have an idea of the types of data you are wanting to classify and protect, this can help drive discussions about how your information protection taxonomy should develop.
 
