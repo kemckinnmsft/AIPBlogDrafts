@@ -355,4 +355,4 @@ Restart-Service AIPScanner
 
 ### Configuring AIP Log Analytics
 
-Lior from my team put out a full blog post about the Log Analytics and you can read more about it [here](https://).
+Lior from my team put out a full blog post about the Log Analytics and you can read more about it [here](https://techcommunity.microsoft.com/t5/Azure-Information-Protection/Data-discovery-reporting-and-analytics-for-all-your-data-with/ba-p/253854).
