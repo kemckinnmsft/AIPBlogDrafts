@@ -375,6 +375,9 @@ At this point, you can run the command below to start your discovery run and beg
 
 ```PowerShell
 Start-AIPScan
+
+# If you have already scanned repositories and you want to see the data in the new dashboard, you will need to run the command below.
+# Start-AIPScan -Reset
 ```
 
 Although I am sure everyone is at various stages of migrating data to the cloud, understanding where your sensitive data is can dramatically increase your awareness of the risk you currently face with your on premises data.
