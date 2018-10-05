@@ -350,6 +350,11 @@ If ( $Continueresponse -ne "y" ) { break }
 
 Install-AIPclient -MSIpath $AIPOutputPath
 
+```
+
+You will likely receive a prompt to close the PowerShell ISE and the AIP Scanner service.  Click **OK** to allow this.  The PowerShell ISE will relaunch and you can run the commands below to complete the update.
+
+```PowerShell
 Update-AIPScanner
 
 Restart-Service AIPScanner
