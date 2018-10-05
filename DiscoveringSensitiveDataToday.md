@@ -366,3 +366,19 @@ When you log into the AIP blade of the Azure Portal, you will see 3 new location
 If you already have a configured ALA Workspace, check the box next to it and press **OK**.  Otherwise, click the **+ Create new workspace** link.
 
 ![](https://raw.githubusercontent.com/kemckinnmsft/AIPBlogDrafts/master/Content/ALANew.png)
+
+Configure each of the options in the Log analytics workspace blade, and press **OK**.  
+
+Finally, back in the Configure analytics (preview) blade, check the box next to the workspace and click **OK**.
+
+At this point, you can run the command below to start your discovery run and begin identifying all of the sensitive information sitting on your on premises CIFS file shares and SharePoint document libraries.  
+
+```PowerShell
+Start-AIPScan
+```
+
+Although I am sure everyone is at various stages of migrating data to the cloud, understanding where your sensitive data is can dramatically increase your awareness of the risk you currently face with your on premises data.
+
+Thanks,
+
+The Information Protection Customer Experience Team
