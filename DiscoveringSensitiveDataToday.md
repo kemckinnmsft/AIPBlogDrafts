@@ -2,6 +2,8 @@
 
 Defining a full Information Protection taxonomy can be a time-consuming and challenging task in a business environment. However, with the AIP Scanner, you can start identifying sensitive data that is sitting on your network in a single day.  Once you have an idea of the types of data you are wanting to classify and protect, this can help drive discussions about how your information protection taxonomy should develop.
 
+> NOTE: If you already have the AIP Scanner installed and just want to see the new logging features included with the preview, skip to the [Extra Credit](#Extra-Credit) section.
+
 ## Prerequisites
 
 At least one Server (Physical or Virtual) capable of running the AIP scanner
