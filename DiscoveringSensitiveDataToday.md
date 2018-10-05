@@ -361,3 +361,5 @@ Lior from my team put out a full blog post about the Log Analytics and you can r
 
 When you log into the AIP blade of the Azure Portal, you will see 3 new locations in the navigation.  Under dashboards, you now have the Usage report (preview) and the Discovery discovery (preview), but we will get to those later.  The one you are initially concerned with is the Configure analytics (preview) under the Manage section.  Click on this and you should see a page like the one below.
 
+![](.\Content\ALAConfigure.png)
+
