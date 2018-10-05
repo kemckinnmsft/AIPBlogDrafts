@@ -2,7 +2,7 @@
 
 Defining a full Information Protection taxonomy can be a time-consuming and challenging task in a business environment. However, with the AIP Scanner, you can start identifying sensitive data that is sitting on your network in a single day.  Once you have an idea of the types of data you are wanting to classify and protect, this can help drive discussions about how your information protection taxonomy should develop.
 
-> NOTE: If you already have the AIP Scanner installed and just want to see the new logging features included with the preview, skip to the [Extra Credit](#Extra-Credit) section.
+> NOTE: If you already have the AIP Scanner installed and just want to see the new logging features included with the preview, skip to the [Extra Credit](#extra-credit) section.
 
 ## Prerequisites
 
@@ -218,7 +218,7 @@ At this point, you can wait for the scan to finish and review the logs at *C:\us
 
 But wait, there's more! The AIP Log Analytics public preview went live in late September, so now instead of seeing the data in the log files on premises, you can see them in a fancy dashboard like the one below.  This takes a bit more configuration, but is a lot more fun.
 
-**Insert Screenshot**
+![](https://gxcuf89792.i.lithium.com/t5/image/serverpage/image-id/50045i65D394145BEEB24C/image-size/large?v=1.0&px=999)
 
 ### Prerequisites for AIP Log Analytics
 
@@ -357,4 +357,7 @@ Restart-Service AIPScanner
 
 ### Configuring AIP Log Analytics
 
-Lior from my team put out a full blog post about the Log Analytics and you can read more about it [here](https://techcommunity.microsoft.com/t5/Azure-Information-Protection/Data-discovery-reporting-and-analytics-for-all-your-data-with/ba-p/253854).
+Lior from my team put out a full blog post about the Log Analytics and you can read more about it [here](https://techcommunity.microsoft.com/t5/Azure-Information-Protection/Data-discovery-reporting-and-analytics-for-all-your-data-with/ba-p/253854). But, for a quick and dirty explanation, we will go with the information below.
+
+When you log into the AIP blade of the Azure Portal, you will see 3 new locations in the navigation.  Under dashboards, you now have the Usage report (preview) and the Discovery discovery (preview), but we will get to those later.  The one you are initially concerned with is the Configure analytics (preview) under the Manage section.  Click on this and you should see a page like the one below.
+
